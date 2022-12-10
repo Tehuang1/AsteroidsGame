@@ -9,6 +9,7 @@ boolean dPressed = false;
 boolean gameOver = false;
 int count = 0;
 int health = 150;
+int score = 0;
 public void setup() 
 {
   size(800,800);
@@ -28,7 +29,7 @@ public void draw()
   }
   if (mousePressed == true){
     count++;
-    if(count % 5 == 0){
+    if(count % 15 == 0){
       bullet.add(new Bullet(ship));
       count = 0;
     }
@@ -49,6 +50,7 @@ public void draw()
     float d2 = dist((float)(bullet.get(i).getBX()), (float)(bullet.get(i).getBY()), (float)(rock.get(a).getX()), (float)(rock.get(a).getY()));
     if(d2 < 10){
       bullet.remove(i);
+      score = score + 10;
       rock.remove(a);
       rock.add(new Asteroid());
       break;
@@ -90,6 +92,9 @@ public void draw()
   rect(30,30,health,20);
   strokeWeight(2);
   stroke(255);
+  textSize(20);
+  text("Score: ", 670, 50);
+  text(score, 730, 50);
   }
   else {
     background(0);
@@ -98,6 +103,8 @@ public void draw()
     textAlign(CENTER, BOTTOM);
     text("GAME OVER", 400,400);
     text("Press r to restart", 400, 450);
+    text("Score: ", 350, 500);
+    text(score, 450, 500);
   }
 }
 public void keyPressed(){
@@ -136,6 +143,7 @@ void keyReleased(){
       gameOver = false;
       health = 150;
       count = 0;
+      score = 0;
       ship = new Spaceship();
       rock = new ArrayList <Asteroid>();
       bullet = new ArrayList <Bullet>();
